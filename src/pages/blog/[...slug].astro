@@ -1,21 +1,147 @@
 ---
-import { CollectionEntry, getCollection } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+import { CollectionEntry, getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+// import BlogPost from '../../layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.slug },
-		props: post,
-	}));
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
 }
-type Props = CollectionEntry<'blog'>;
+type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
 const { Content } = await post.render();
 ---
 
-<BlogPost {...post.data}>
-	<h1>{post.data.title}</h1>
-	<Content />
-</BlogPost>
+<BaseLayout>
+  <!-- <BlogPost {...post.data}> -->
+  <section class="mx-auto">
+    <nav
+      class="custom sticky top-0 pt-4 pb-0.5 w-full z-10 bg-gradient-to-b from-80% from-zinc-900 to-transparent to-100%"
+    >
+      <a class="flex items-center gap-x-2 no-underline group" href="/">
+        <span class="transform rotate-180 scale-75 md:scale-100">
+          <svg
+            width="22"
+            height="19"
+            viewBox="0 0 22 19"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              class="opacity-0 transition-opacity group-hover:opacity-100"
+              d="M18 9.5H2"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+            <path
+              class="transition-transform transform group-hover:translate-x-[5px]"
+              d="M8 2L15.5 9.5L8 17"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </span>
+        Home
+      </a>
+      <h1>{post.data.title}</h1>
+      <!-- <div class="custom"></div> -->
+    </nav>
+    <section
+      class="prose-headings:scroll-mt-40 prose-code:after:content-[''] prose-code:before:content-[''] custom-prose"
+    >
+      <Content />
+    </section>
+  </section>
+  <!-- </BlogPost> -->
+</BaseLayout>
+
+<style is:global>
+  .custom-prose :where(code):not(:where([class~="not-prose"] *)):not(pre code) {
+    padding: theme(padding.1) theme(padding.2);
+    background-color: theme(colors.zinc.700);
+    border-radius: theme(borderRadius.sm);
+    font-weight: theme(fontWeight.normal);
+  }
+  .icon-link {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    margin-left: -1.25rem;
+  }
+
+  .icon-link::before {
+    content: url("/link-icon-mobile.svg");
+    top: 0;
+    right: 0;
+    padding-right: 0.25rem;
+    transition: opacity 100ms ease-in-out;
+    opacity: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .icon-link::before {
+      content: url("/link-icon.svg");
+      top: 0;
+      right: 0;
+      padding-right: 0.25rem;
+      transition: opacity 100ms ease-in-out;
+      opacity: 0;
+    }
+    .icon-link {
+      position: relative;
+      width: 28px;
+      height: 28px;
+      display: inline-block;
+      margin-left: -1.75rem;
+    }
+  }
+
+  .icon-link:hover::before {
+    opacity: 1;
+  }
+
+  h1:hover > a > .icon-link::before,
+  h2:hover > a > .icon-link::before,
+  h3:hover > a > .icon-link::before,
+  h4:hover > a > .icon-link::before,
+  h5:hover > a > .icon-link::before,
+  h6:hover > a > .icon-link::before {
+    opacity: 1;
+  }
+
+  blockquote[data-callout] {
+    font-style: normal;
+    font-weight: normal;
+    padding: 0 theme(space.6) theme(space.6);
+  }
+
+  .callout-warning {
+    background-color: theme(colors.amber.900 / 30%);
+  }
+
+  .callout-info {
+    background-color: theme(colors.blue.900 / 30%);
+  }
+
+  .callout-title {
+    display: flex;
+    align-items: center;
+    column-gap: theme(space.2);
+  }
+
+  .callout-warning .callout-title {
+    color: theme(colors.amber.500);
+    padding: theme(space.4) 0;
+  }
+  .callout-info .callout-title {
+    color: theme(colors.blue.500);
+    padding: theme(space.4) 0;
+  }
+</style>
