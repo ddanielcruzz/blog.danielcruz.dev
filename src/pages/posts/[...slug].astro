@@ -1,23 +1,21 @@
 ---
 import { CollectionEntry, getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-// import BlogPost from '../../layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
+  const posts = await getCollection("posts");
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: post,
   }));
 }
-type Props = CollectionEntry<"blog">;
+type Props = CollectionEntry<"posts">;
 
 const post = Astro.props;
 const { Content } = await post.render();
 ---
 
-<BaseLayout>
-  <!-- <BlogPost {...post.data}> -->
+<BaseLayout siteTitle={post.data.title} siteDescription={post.data.description}>
   <section class="mx-auto">
     <nav
       class="custom sticky top-0 pt-4 pb-0.5 w-full z-10 bg-gradient-to-b from-80% from-zinc-900 to-transparent to-100%"
@@ -58,7 +56,6 @@ const { Content } = await post.render();
       <Content />
     </section>
   </section>
-  <!-- </BlogPost> -->
 </BaseLayout>
 
 <style is:global>

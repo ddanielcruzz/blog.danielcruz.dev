@@ -6,7 +6,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const posts = await getCollection("blog");
+const posts = await getCollection("posts");
 ---
 
 <BaseLayout siteTitle="Home" siteDescription="Home page">
