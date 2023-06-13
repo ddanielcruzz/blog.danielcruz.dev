@@ -10,12 +10,14 @@ const { siteTitle, siteDescription } = Astro.props;
     <BaseHead title={siteTitle} description={siteDescription} />
   </head>
 
-  <body class="bg-zinc-900 bg-no-repeat text-zinc-200">
+  <body
+    class="dark:bg-zinc-900 dark:text-zinc-200 bg-no-repeat bg-zinc-200 text-zinc-900"
+  >
     <section
       class="min-h-screen flex flex-col justify-between h-full pt-10 md:pt-20"
     >
       <main
-        class="prose px-10 dark:prose-invert lg:prose-xl mx-auto prose-zinc"
+        class="prose max-w-[95%] sm:max-w-[65ch] px-10 dark:prose-invert lg:prose-xl mx-auto prose-zinc"
       >
         <slot />
       </main>
