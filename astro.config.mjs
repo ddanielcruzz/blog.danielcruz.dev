@@ -6,20 +6,16 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import tailwind from "@astrojs/tailwind";
 
-import netlify from "@astrojs/netlify/functions";
-
 // https://astro.build/config
 export default defineConfig({
   experimental: {
-    assets: true
+    assets: true,
   },
   site: "https://example.com",
   integrations: [mdx(), sitemap(), tailwind()],
   markdown: {
     remarkPlugins: [remarkObsidianCallout],
-    rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings]
+    rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
     // rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: "wrap" }]],
   },
-  output: "server",
-  adapter: netlify()
 });
