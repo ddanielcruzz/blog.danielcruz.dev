@@ -15,7 +15,11 @@ const post = Astro.props;
 const { Content } = await post.render();
 ---
 
-<BaseLayout siteTitle={post.data.title} siteDescription={post.data.description}>
+<BaseLayout
+  siteTitle={post.data.title}
+  siteDescription={post.data.description}
+  ogImage={`/${post.slug}.png`}
+>
   <section class="mx-auto">
     <nav
       class="custom sticky top-0 pt-4 pb-0.5 w-full z-10 bg-gradient-to-b from-80% from-zinc-900 to-transparent to-100%"
