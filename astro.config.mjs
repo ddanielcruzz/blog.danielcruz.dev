@@ -11,7 +11,7 @@ export default defineConfig({
   experimental: {
     assets: true,
   },
-  site: "https://example.com",
+  site: "https://blog.danielcruz.dev",
   integrations: [mdx(), sitemap(), tailwind()],
   markdown: {
     remarkPlugins: [remarkObsidianCallout],
