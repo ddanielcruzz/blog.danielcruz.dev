@@ -1,8 +1,8 @@
 ---
 title: "Neovim Part 1"
 description: "Starting our journey with Neovim"
-pubDate: "May 26 2023"
-tags: ["neovim", "IDE"]
+pubDate: "Jun 12 2023"
+tags: ["Neovim", "IDE"]
 ---
 
 ## About this blog series
