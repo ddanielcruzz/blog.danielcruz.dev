@@ -11,7 +11,28 @@ In a project I'm currently working on, I have an API endpoint that retrieves the
 
 Fortunately, I'm using Next.js, which allows me to leverage API endpoints to safely make the call on the backend and then access the endpoint from the front end.
 
-However, the external endpoint can return content of any type, making it challenging to parse the response and send it to the browser. One possible but undesirable solution would be manually checking the [`Content-Type`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) header and using different parsing methods based on its value. This approach is brittle and relies on imperative programming.
+However, the external endpoint can return content of any type, making it challenging to parse the response and send it to the browser. One possible but undesirable solution would be manually checking the [`Content-Type`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) header and using different parsing methods based on its value. A sample of that implementation would look like
+
+```ts
+// ...
+const response = fetch("https://example.com/api/v1/content/" + file);
+
+const contentType = response.headers.get("content-type");
+
+if (contentType.includes("json")) {
+  const parsedResponse = await response.json();
+  return res.send(parsedResponse);
+}
+
+if (contentType.includes("text")) {
+  const parsedResponse = await response.text();
+  return res.send(parsedResponse);
+}
+
+// etc
+```
+
+This approach is brittle and relies on imperative programming.
 
 Furthermore, it involves having the entire response in memory before sending it to the client, which can lead to memory overhead, slow response times, and even application crashes when handling large files.
 
